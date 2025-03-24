@@ -26,7 +26,10 @@ import java.util.UUID;
 
         }
         @PostMapping
+
+
         public ResponseEntity<?> createCustomer(@RequestBody CustomerRequest request) {
+            try{
             Customer customer = new Customer();
             customer.setName(request.getName());
             customer.setCreditProfile(request.getCreditProfile());
@@ -37,10 +40,12 @@ import java.util.UUID;
             customer.setLegalDocument(document);
 
 
-
             customerFactory.createCustomer(customer);
             UUID customerId = UUID.randomUUID();
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("customerId", customerId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", e.getMessage()));
         }
     }
+}
 
