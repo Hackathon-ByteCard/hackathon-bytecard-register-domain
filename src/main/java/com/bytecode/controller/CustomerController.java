@@ -3,6 +3,7 @@ package com.bytecode.controller;
 import com.bytecode.controller.requests.CustomerRequest;
 import com.bytecode.domain.customer.Customer;
 import com.bytecode.domain.customer.CustomerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,9 @@ import java.util.UUID;
     @RestController
     @RequestMapping("/customers")
     public class CustomerController {
-        private CustomerFactory customerFactory;
+
+        private final CustomerFactory customerFactory;
+        @Autowired
         public CustomerController(CustomerFactory customerFactory) {
             this.customerFactory = customerFactory;
 
@@ -25,11 +28,13 @@ import java.util.UUID;
         @PostMapping
         public ResponseEntity<?> createCustomer(@RequestBody CustomerRequest request) {
             Customer customer = new Customer();
-            customer.setNome(request.getName());
+            customer.setName(request.getName());
             customer.setCreditProfile(request.getCreditProfile());
             customer.setDocumentType(request.getType());
-            customer.setLegalDocument(request.getDocument().getType());
-            customer.setLegalDocument(request.getDocument().getCode());
+            Customer.Document document = new Customer.Document();
+            document.setType(request.getDocument().getType());
+            document.setCode(request.getDocument().getCode());
+            customer.setLegalDocument(document);
 
 
 

@@ -1,5 +1,7 @@
 package com.bytecode.domain.creditscore;
 
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 
 @Getter
