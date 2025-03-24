@@ -15,7 +15,6 @@ public class Customer {
     @Embedded
     private Document legalDocument;
     private String documentType;
-
     private CreditProfile creditProfile;
     private String endereco;
 
